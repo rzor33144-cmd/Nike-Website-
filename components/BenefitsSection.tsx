@@ -36,22 +36,21 @@ const BenefitsSection: React.FC = () => {
   return (
     <section className="py-20 md:py-32 bg-[#111]">
       <div className="container mx-auto px-6">
-        <div className="animate-on-scroll">
-          <h2 className="font-anton text-5xl md:text-7xl uppercase text-center">Engineered for Excellence</h2>
-          <p className="text-center mt-4 max-w-2xl mx-auto text-gray-300">
-            More than just an aesthetic, Nike Air is a revolutionary technology that changed the game.
-          </p>
-        </div>
+        <h2 className="font-anton text-5xl md:text-7xl uppercase text-center animate-on-scroll">Engineered for Excellence</h2>
+        <p className="text-center mt-4 max-w-2xl mx-auto text-gray-300 animate-on-scroll" style={{ transitionDelay: '100ms' }}>
+          More than just an aesthetic, Nike Air is a revolutionary technology that changed the game.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16 text-center">
-          {benefits.map((benefit, index) => (
+          {benefits.map((benefit, cardIndex) => (
             <div 
-              key={index} 
-              className="flex flex-col items-center animate-on-scroll"
-              style={{ transitionDelay: `${index * 150}ms` }}
+              key={cardIndex} 
+              className="flex flex-col items-center"
             >
-              {benefit.icon}
-              <h3 className="text-2xl font-bold mt-2">{benefit.title}</h3>
-              <p className="text-gray-400 mt-4">{benefit.description}</p>
+              <div className="animate-on-scroll" style={{ transitionDelay: `${cardIndex * 150}ms` }}>
+                {benefit.icon}
+              </div>
+              <h3 className="text-2xl font-bold mt-2 animate-on-scroll" style={{ transitionDelay: `${cardIndex * 150 + 100}ms` }}>{benefit.title}</h3>
+              <p className="text-gray-400 mt-4 animate-on-scroll" style={{ transitionDelay: `${cardIndex * 150 + 200}ms` }}>{benefit.description}</p>
             </div>
           ))}
         </div>

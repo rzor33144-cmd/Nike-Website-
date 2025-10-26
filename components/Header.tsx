@@ -1,14 +1,19 @@
+
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../CartContext';
 
 const NikeLogo: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   <button onClick={onClick} aria-label="Go to homepage">
-    <svg className="h-7 w-auto text-white" viewBox="0 0 293.4 103.3" fill="currentColor">
-      <path d="M281.3,12.5c-20.9-10.3-43.2-12.2-64.6-12.2c-42.3,0-76.3,13.4-76.3,42.9c0,23,22,34.8,55,34.8c22.3,0,40.4-4,52-7.8
-        l-1.9-18.2c-11,3.4-26.6,6.3-42.9,6.3c-14.7,0-29-4.2-29-18.4c0-13.4,18.4-19.1,34.4-19.1c11.7,0,21.8,1.3,31.2,3.8L281.3,12.5z
-        M293.4,103.3L293.4,103.3C216.9,103.3,158,48.2,158,0l26.2,0c0,35.3,46.1,81.7,109.2,81.7V103.3z"/>
-    </svg>
+    <img src="https://1000logos.net/wp-content/uploads/2021/11/Nike-Logo-500x281.png" alt="Nike Logo" className="h-7 w-auto filter invert" />
   </button>
+);
+
+const SearchIcon: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+    <button onClick={onClick} aria-label="Search" className="relative text-white hover:text-gray-300 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+    </button>
 );
 
 const BagIcon: React.FC<{ onClick: () => void }> = ({ onClick }) => (
@@ -30,9 +35,10 @@ const MenuIcon: React.FC<{ onClick: () => void }> = ({ onClick }) => (
 interface HeaderProps {
   page: string;
   setPage: (page: string) => void;
+  openSearch: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ page, setPage }) => {
+const Header: React.FC<HeaderProps> = ({ page, setPage, openSearch }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openCart, totalItems } = useCart();
@@ -89,6 +95,7 @@ const Header: React.FC<HeaderProps> = ({ page, setPage }) => {
             <button onClick={scrollToFeatured} className="bg-white text-black px-4 py-2 rounded-full font-bold hover:bg-gray-200 transition-colors hidden sm:block">
                 Shop Now
             </button>
+            <SearchIcon onClick={openSearch} />
              <div className="relative">
                 <BagIcon onClick={openCart} />
                 {totalItems > 0 && (

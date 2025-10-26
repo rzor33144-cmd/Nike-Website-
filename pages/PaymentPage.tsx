@@ -77,10 +77,10 @@ const PaymentPage: React.FC<PaymentPageProps> = ({ setPage }) => {
               
               <h2 className="text-2xl md:text-3xl font-bold pt-8 mb-6">Payment</h2>
               <div className="space-y-3">
-                <button type="button" className="w-full bg-black py-3 rounded-lg flex items-center justify-center font-bold border border-gray-600 hover:border-white transition-colors">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/2560px-Apple_Pay_logo.svg.png" alt="Apple Pay" className="h-6" />
+                <button type="button" className="w-full bg-white py-3 rounded-lg flex items-center justify-center font-bold transition-all duration-200 ease-in-out hover:bg-gray-200 active:scale-95">
+                    <img src="https://1000logos.net/wp-content/uploads/2023/03/Apple-Pay-logo-500x281.png" alt="Apple Pay" className="h-8" />
                 </button>
-                <button type="button" className="w-full bg-white py-3 rounded-lg flex items-center justify-center font-bold">
+                <button type="button" className="w-full bg-white py-3 rounded-lg flex items-center justify-center font-bold transition-all duration-200 ease-in-out hover:bg-gray-200 active:scale-95">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" alt="PayPal" className="h-6" />
                 </button>
                 <div className="text-center text-gray-500 py-2">OR</div>

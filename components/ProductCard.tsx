@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Shoe } from '../types';
 import { useCart } from '../CartContext';
@@ -8,12 +9,20 @@ const PlayIcon: React.FC = () => (
   </svg>
 );
 
+const ExpandIcon: React.FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 1v4m0 0h-4m4 0l-5-5" />
+  </svg>
+);
+
+
 interface ProductCardProps {
   shoe: Shoe;
   index: number;
+  openVideoModal: (url: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ shoe, index }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ shoe, index, openVideoModal }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { addToCart } = useCart();
@@ -33,14 +42,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ shoe, index }) => {
     addToCart(shoe);
   };
 
+  const handleMediaClick = () => {
+    if (shoe.videoUrl) {
+      openVideoModal(shoe.videoUrl);
+    }
+  };
+
   return (
     <div
-      className="bg-[#1a1a1a] rounded-xl overflow-hidden group animate-on-scroll"
+      className="bg-[#1a1a1a] rounded-xl overflow-hidden group animate-on-scroll transition-all duration-300 ease-in-out hover:-translate-y-2 hover:shadow-2xl hover:shadow-white/10"
       style={{ transitionDelay: `${index * 150}ms` }}
-      onMouseEnter={() => shoe.videoUrl && setIsHovered(true)}
-      onMouseLeave={() => shoe.videoUrl && setIsHovered(false)}
     >
-      <div className="overflow-hidden relative h-64 sm:h-72">
+      <div
+        className={`overflow-hidden relative h-64 sm:h-72 ${shoe.videoUrl ? 'cursor-pointer' : ''}`}
+        onMouseEnter={() => shoe.videoUrl && setIsHovered(true)}
+        onMouseLeave={() => shoe.videoUrl && setIsHovered(false)}
+        onClick={handleMediaClick}
+        role={shoe.videoUrl ? "button" : undefined}
+        aria-label={shoe.videoUrl ? "Play video in full screen" : undefined}
+        tabIndex={shoe.videoUrl ? 0 : undefined}
+        onKeyDown={(e) => { if (shoe.videoUrl && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); handleMediaClick(); } }}
+      >
         <img
           src={shoe.imageUrl}
           alt={shoe.name}
@@ -58,6 +80,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ shoe, index }) => {
             >
               <source src={shoe.videoUrl} type="video/mp4" />
             </video>
+            {isHovered && (
+                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                    <ExpandIcon />
+                </div>
+            )}
             { !isHovered &&
               <div className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2.5 py-1.5 rounded-full flex items-center backdrop-blur-sm cursor-pointer">
                 <PlayIcon />

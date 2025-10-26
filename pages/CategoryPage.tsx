@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { FEATURED_SHOES } from '../constants';
 import ProductCard from '../components/ProductCard';
@@ -6,10 +7,16 @@ import { Shoe } from '../types';
 interface CategoryPageProps {
   title: string;
   audience: 'Men' | 'Women' | 'Kids';
+  openVideoModal: (url: string) => void;
 }
 
-const CategoryPage: React.FC<CategoryPageProps> = ({ title, audience }) => {
-  const filteredShoes = FEATURED_SHOES.filter(shoe => shoe.audience === audience || shoe.audience === 'Unisex');
+const CategoryPage: React.FC<CategoryPageProps> = ({ title, audience, openVideoModal }) => {
+  const filteredShoes = FEATURED_SHOES.filter(shoe => {
+    if (audience === 'Kids') {
+      return shoe.audience === 'Kids';
+    }
+    return shoe.audience === audience || shoe.audience === 'Unisex';
+  });
 
   return (
     <section className="py-20 md:py-32 bg-black min-h-screen pt-32">
@@ -20,7 +27,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ title, audience }) => {
         {filteredShoes.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredShoes.map((shoe, index) => (
-              <ProductCard key={shoe.id} shoe={shoe} index={index} />
+              <ProductCard key={shoe.id} shoe={shoe} index={index} openVideoModal={openVideoModal} />
             ))}
           </div>
         ) : (
